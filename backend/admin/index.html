@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cashra Admin</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F7A4D'/%3E%3Cpath d='M21 11.2A6.6 6.6 0 1 0 21 20.8' stroke='%23fff' stroke-width='3.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-wrap" id="login-view">
+    <form class="login-card" id="login-form">
+      <div class="brand"><span class="mark">C</span><b>Cashra</b></div>
+      <h1>Admin sign in</h1>
+      <div class="field"><label for="l-email">Email</label><input type="email" id="l-email" autocomplete="username" required></div>
+      <div class="field"><label for="l-pass">Password</label><input type="password" id="l-pass" autocomplete="current-password" required></div>
+      <div class="field" id="otp-field" hidden><label for="l-otp">2FA code</label><input type="text" id="l-otp" inputmode="numeric" autocomplete="one-time-code"></div>
+      <button class="btn block" type="submit">Sign in</button>
+      <p class="err-msg" id="login-err" hidden></p>
+    </form>
+  </div>
+
+  <!-- App -->
+  <div id="app-view" hidden>
+    <div class="topbar">
+      <div class="brand"><span class="mark">C</span><b>Cashra Admin</b></div>
+      <div class="tabs">
+        <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="orders">Orders</button>
+        <button class="tab" data-tab="audit">Audit</button>
+      </div>
+      <button class="btn ghost sm" id="logout-btn">Sign out</button>
+    </div>
+
+    <div class="wrap">
+      <!-- Dashboard -->
+      <section id="tab-dashboard">
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Users</div><div class="v" id="s-users">--</div></div>
+          <div class="stat"><div class="k">Orders</div><div class="v" id="s-orders">--</div></div>
+          <div class="stat"><div class="k">Paid volume</div><div class="v" id="s-volume">--</div></div>
+        </div>
+        <div class="panel">
+          <h3>Most sold assets</h3>
+          <div id="asset-bars"></div>
+        </div>
+        <div class="panel">
+          <h3>Orders by status</h3>
+          <div id="status-bars"></div>
+        </div>
+      </section>
+
+      <!-- Orders -->
+      <section id="tab-orders" hidden>
+        <div class="filters" id="order-filters">
+          <button class="chip active" data-status="">All</button>
+          <button class="chip" data-status="pending">Pending</button>
+          <button class="chip" data-status="crypto_received">Crypto received</button>
+          <button class="chip" data-status="paid">Paid</button>
+          <button class="chip" data-status="cancelled">Cancelled</button>
+        </div>
+        <table>
+          <thead><tr><th>Ref</th><th>Customer</th><th>Asset</th><th>Amount</th><th>USD</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="orders-body"></tbody>
+        </table>
+      </section>
+
+      <!-- Audit -->
+      <section id="tab-audit" hidden>
+        <h2 class="section">Audit log</h2>
+        <table>
+          <thead><tr><th>When</th><th>Admin</th><th>Action</th><th>Detail</th><th>IP</th></tr></thead>
+          <tbody id="audit-body"></tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
+  <!-- Order detail modal -->
+  <div class="modal-bg" id="modal" hidden>
+    <div class="modal">
+      <div class="modal-head"><h3 id="m-title">Order</h3><button class="modal-x" id="m-close">&times;</button></div>
+      <div class="modal-body" id="m-body"></div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

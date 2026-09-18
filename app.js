@@ -4,7 +4,16 @@
   var MIN_PAYOUT = 10;
   var US_STATES = ['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
 
-  var state = { crypto: 'BTC', amount: '0.1', lockedRate: 0, account: {}, method: null, card: {}, bank: {}, billing: {} };
+  var state = { crypto: 'BTC', amount: '0.1', lockedRate: 0, orderId: null, orderRef: null, account: {}, method: null, card: {}, bank: {}, billing: {} };
+
+  // Backend calls (only when window.CASHRA_API is configured; otherwise demo mode).
+  function apiOn() { return !!window.CASHRA_API; }
+  function apiPost(path, body, auth) {
+    var headers = { 'Content-Type': 'application/json' };
+    if (auth && window.CASHRA_TOKEN) headers.Authorization = 'Bearer ' + window.CASHRA_TOKEN;
+    return fetch(window.CASHRA_API + path, { method: 'POST', headers: headers, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw d; return d; }); });
+  }
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return (r || document).querySelectorAll(s); }
@@ -185,7 +194,7 @@
   }
   function renderConfirm() {
     var total = (parseFloat(state.amount) || 0) * state.lockedRate;
-    $('#confirm-ref').textContent = genRef();
+    $('#confirm-ref').textContent = state.orderRef || genRef();
     $('#confirm-amount').textContent = money(total) + ' USD';
     $('#confirm-eta').textContent = state.method === 'debit' ? 'Within minutes' : '1–3 business days';
   }
@@ -226,10 +235,29 @@
 
     $('#form-signup').addEventListener('submit', function (e) {
       e.preventDefault();
-      if (validateSignup()) {
+      if (!validateSignup()) return;
+      if (!apiOn()) {
         $('#method-payout').textContent = money((parseFloat(state.amount) || 0) * state.lockedRate);
         show('view-method');
+        return;
       }
+      var btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      apiPost('/api/auth/signup', {
+        name: state.account.name, email: state.account.email,
+        phone: state.account.phone, password: $('#su-pass').value
+      }).then(function (res) {
+        window.CASHRA_TOKEN = res.token;
+        return apiPost('/api/orders', { asset: state.crypto, cryptoAmount: parseFloat(state.amount) }, true);
+      }).then(function (order) {
+        state.orderId = order.id;
+        state.orderRef = order.ref;
+        state.lockedRate = parseFloat(order.locked_rate);
+        $('#method-payout').textContent = money(parseFloat(order.usd_total));
+        show('view-method');
+      }).catch(function (err) {
+        alert((err && err.error) || 'Could not create your account. Please try again.');
+      }).finally(function () { btn.disabled = false; });
     });
 
     $$('.method').forEach(function (m) {
@@ -258,9 +286,21 @@
     $('#form-debit').addEventListener('submit', function (e) { e.preventDefault(); if (validateDebit()) { renderReview(); show('view-review'); } });
     $('#form-bank').addEventListener('submit', function (e) { e.preventDefault(); if (validateBank()) { renderReview(); show('view-review'); } });
 
-    $('#btn-confirm').addEventListener('click', function () { renderConfirm(); show('view-confirm'); });
+    $('#btn-confirm').addEventListener('click', function () {
+      if (!apiOn()) { renderConfirm(); show('view-confirm'); return; }
+      var payload = state.method === 'debit'
+        ? { method: 'debit', name: state.card.name, number: state.card.number, expiry: state.card.expiry, cvv: state.card.cvv, billing: state.billing }
+        : { method: 'bank', holder: state.bank.holder, bankName: state.bank.bankName, routing: state.bank.routing, type: state.bank.type, account: state.bank.account, billing: state.billing };
+      var btn = this;
+      btn.disabled = true;
+      apiPost('/api/orders/' + state.orderId + '/payout', payload, true)
+        .then(function () { renderConfirm(); show('view-confirm'); })
+        .catch(function (err) { alert((err && err.error) || 'Could not submit your order. Please try again.'); })
+        .finally(function () { btn.disabled = false; });
+    });
     $('#btn-new').addEventListener('click', function () {
       state.account = {}; state.method = null; state.card = {}; state.bank = {}; state.billing = {};
+      state.orderId = null; state.orderRef = null; window.CASHRA_TOKEN = null;
       $('#form-signup').reset(); $('#form-debit').reset(); $('#form-bank').reset();
       show('view-exchange');
     });
