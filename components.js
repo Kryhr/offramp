@@ -55,11 +55,10 @@
     '<path fill="#fff" d="M12.9 24.84c-4.68-1.68-7.08-6.9-5.34-11.52.9-2.52 2.88-4.44 5.34-5.34.24-.12.36-.3.36-.6v-.84c0-.24-.12-.42-.36-.48-.06 0-.18 0-.24.06a9.85 9.85 0 0 0-6.42 12.36c1.02 3.18 3.48 5.64 6.42 6.66.24.12.48 0 .54-.24.06-.06.06-.12.06-.24v-.84c0-.18-.18-.42-.36-.54zm6.42-18.84c-.24-.12-.48 0-.54.24-.06.06-.06.12-.06.24v.84c0 .24.18.48.36.6 4.68 1.68 7.08 6.9 5.34 11.52-.9 2.52-2.88 4.44-5.34 5.34-.24.12-.36.3-.36.6v.84c0 .24.12.42.36.48.06 0 .18 0 .24-.06a9.85 9.85 0 0 0 6.42-12.36c-1.02-3.24-3.54-5.7-6.42-6.72z"/>' +
   '</symbol>' +
 
-  /* OffRamp brand mark: exit-ramp arrow on green tile */
+  /* Cashra brand mark: C monogram on green tile */
   '<symbol id="ic-logo" viewBox="0 0 32 32">' +
     '<rect width="32" height="32" rx="8" fill="#0F7A4D"/>' +
-    '<path d="M8 22.5 21 9.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>' +
-    '<path d="M14 9.5h7v7" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
+    '<path d="M21 11.2A6.6 6.6 0 1 0 21 20.8" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/>' +
   '</symbol>' +
   '</svg>';
 
@@ -69,9 +68,9 @@
 
   var HEADER =
   '<div class="wrap header-in">' +
-    '<a class="brand" href="index.html" aria-label="OffRamp home">' +
+    '<a class="brand" href="index.html" aria-label="Cashra home">' +
       markSvg('brand-mark') +
-      '<span class="brand-name">OffRamp</span>' +
+      '<span class="brand-name">Cashra</span>' +
     '</a>' +
     '<nav class="main-nav" aria-label="Primary">' +
       '<a href="rates.html" data-nav="rates">Rates</a>' +
@@ -89,7 +88,7 @@
   '<div class="wrap">' +
     '<div class="footer-top">' +
       '<div class="footer-brand-col">' +
-        '<a class="brand" href="index.html">' + markSvg('brand-mark') + '<span class="brand-name">OffRamp</span></a>' +
+        '<a class="brand" href="index.html">' + markSvg('brand-mark') + '<span class="brand-name">Cashra</span></a>' +
         '<p class="footer-tagline">Convert crypto to US dollars with zero fees. Withdraw to your debit card or bank account.</p>' +
       '</div>' +
       '<div class="footer-col">' +
@@ -111,8 +110,8 @@
       '</div>' +
     '</div>' +
     '<div class="footer-bottom">' +
-      '<span class="footer-copy">&copy; ' + YEAR + ' OffRamp</span>' +
-      '<span class="footer-disclaimer">Digital assets are volatile and their value can go down as well as up. OffRamp is a crypto-to-fiat conversion service and is not a bank or investment adviser.</span>' +
+      '<span class="footer-copy">&copy; ' + YEAR + ' Cashra</span>' +
+      '<span class="footer-disclaimer">Digital assets are volatile and their value can go down as well as up. Cashra is a crypto-to-fiat conversion service and is not a bank or investment adviser.</span>' +
     '</div>' +
   '</div>';
 
@@ -124,11 +123,11 @@
   '<section class="chat-panel" id="chat-panel" role="dialog" aria-label="Support chat" hidden>' +
     '<div class="chat-head">' +
       '<span class="ch-avatar">' + markSvg('') + '</span>' +
-      '<div><div class="ch-title">OffRamp Support</div><div class="ch-status"><span class="dot"></span>Typically replies in a few minutes</div></div>' +
+      '<div><div class="ch-title">Cashra Support</div><div class="ch-status"><span class="dot"></span>Typically replies in a few minutes</div></div>' +
       '<button class="chat-close" id="chat-close" aria-label="Close chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>' +
     '</div>' +
     '<div class="chat-body" id="chat-body">' +
-      '<div class="chat-msg bot">Hi there! 👋 Welcome to OffRamp. How can we help you cash out today?</div>' +
+      '<div class="chat-msg bot">Hi there! 👋 Welcome to Cashra. How can we help you cash out today?</div>' +
     '</div>' +
     '<form class="chat-foot" id="chat-form">' +
       '<input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" aria-label="Message">' +
@@ -170,7 +169,7 @@
       input.value = '';
       setTimeout(function () {
         if (!replied) {
-          addMsg('Thanks for reaching out! Our team will get back to you shortly. For anything urgent about a payout, email support@offramp.example with your order reference.', 'bot');
+          addMsg('Thanks for reaching out! Our team will get back to you shortly. For anything urgent about a payout, email support@cashra.example with your order reference.', 'bot');
           replied = true;
         } else {
           addMsg('Got it — we\'ve noted that and someone will follow up by email soon.', 'bot');
