@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OffRamp</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2300D4AA'/%3E%3Cpath d='M9 18l5 5 9-14' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="OffRamp home">
+        <span class="logo-mark" aria-hidden="true"></span>offramp
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#rates" class="nav-link">Rates</a>
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#support" class="nav-link">Support</a>
+        <a href="#signin" class="nav-link nav-cta">Sign in</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- STEP 1: Exchange -->
+    <section id="view-exchange" class="view" data-view="exchange">
+      <div class="container exchange-page">
+        <div class="hero-text">
+          <h1>Cash out your crypto</h1>
+          <div class="hero-badges">
+            <span class="badge badge-accent">0% fees</span>
+            <span class="badge">Debit card or bank transfer</span>
+          </div>
+        </div>
+        <div class="exchange-widget">
+          <div class="widget-section">
+            <label class="widget-label" for="crypto-select">You send</label>
+            <div class="widget-input-row">
+              <div class="crypto-select-wrap">
+                <span class="crypto-dot" id="crypto-dot"></span>
+                <select id="crypto-select">
+                  <option value="BTC">BTC</option>
+                  <option value="ETH">ETH</option>
+                  <option value="SOL">SOL</option>
+                  <option value="USDT">USDT</option>
+                  <option value="USDC">USDC</option>
+                </select>
+              </div>
+              <input type="text" id="crypto-amount" inputmode="decimal" placeholder="0.00" value="0.1" autocomplete="off">
+            </div>
+          </div>
+          <div class="rate-bar">
+            <div class="rate-left">
+              <span class="live-dot" aria-label="Live rate"></span>
+              <span id="rate-text">1 BTC = $67,432.00</span>
+            </div>
+            <span class="rate-fee">0% fee</span>
+          </div>
+          <div class="widget-section">
+            <label class="widget-label">You receive</label>
+            <div class="payout-display">
+              <span class="payout-flag">USD</span>
+              <span id="payout-amount" class="payout-num">$6,743.20</span>
+            </div>
+          </div>
+          <button type="button" class="btn-primary" id="btn-to-payment">
+            Continue
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="supported-row">
+          <span class="supported-label">Supported assets</span>
+          <div class="asset-tags">
+            <span class="asset-tag" style="--dot:#F7931A">BTC</span>
+            <span class="asset-tag" style="--dot:#627EEA">ETH</span>
+            <span class="asset-tag" style="--dot:#9945FF">SOL</span>
+            <span class="asset-tag" style="--dot:#26A17B">USDT</span>
+            <span class="asset-tag" style="--dot:#2775CA">USDC</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: Payment method -->
+    <section id="view-method" class="view" data-view="method" hidden>
+      <div class="container flow-page">
+        <button type="button" class="btn-back" id="back-to-exchange">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <h2 class="flow-title">Choose how to receive</h2>
+        <p class="flow-sub">Your <strong id="method-payout">$6,743.20</strong> will be sent via:</p>
+        <div class="method-grid">
+          <button type="button" class="method-option" data-method="debit">
+            <div class="method-top">
+              <span class="method-name">Debit card</span>
+              <span class="method-tag tag-instant">Instant</span>
+            </div>
+            <p class="method-detail">Deposited directly to your Visa or Mastercard debit card. Typically arrives within minutes.</p>
+          </button>
+          <button type="button" class="method-option" data-method="bank">
+            <div class="method-top">
+              <span class="method-name">Bank transfer</span>
+              <span class="method-tag tag-standard">1&ndash;3 days</span>
+            </div>
+            <p class="method-detail">ACH transfer to your checking or savings account. Arrives in 1&ndash;3 business days.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3A: Debit card form -->
+    <section id="view-debit" class="view" data-view="debit" hidden>
+      <div class="container flow-page">
+        <button type="button" class="btn-back" id="back-to-method-debit">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <div class="flow-top">
+          <h2 class="flow-title">Debit card details</h2>
+          <span class="step-indicator">Step 2 of 3</span>
+        </div>
+        <form id="form-debit" class="form" novalidate autocomplete="off">
+          <fieldset>
+            <legend class="sr-only">Card information</legend>
+            <div class="field">
+              <label for="card-name">Cardholder name</label>
+              <input type="text" id="card-name" placeholder="Name on card" required>
+            </div>
+            <div class="field">
+              <label for="card-number">Card number</label>
+              <input type="text" id="card-number" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" required autocomplete="off">
+            </div>
+            <div class="field-row-2">
+              <div class="field">
+                <label for="card-expiry">Expiry</label>
+                <input type="text" id="card-expiry" inputmode="numeric" placeholder="MM / YY" maxlength="7" required>
+              </div>
+              <div class="field">
+                <label for="card-cvv">CVV</label>
+                <input type="text" id="card-cvv" inputmode="numeric" placeholder="000" maxlength="4" required autocomplete="off">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="fieldset-heading">Billing address</legend>
+            <div class="field">
+              <label for="debit-street">Street address</label>
+              <input type="text" id="debit-street" required>
+            </div>
+            <div class="field">
+              <label for="debit-apt">Apt / Suite <span class="opt">(optional)</span></label>
+              <input type="text" id="debit-apt">
+            </div>
+            <div class="field-row-3">
+              <div class="field">
+                <label for="debit-city">City</label>
+                <input type="text" id="debit-city" required>
+              </div>
+              <div class="field">
+                <label for="debit-state">State</label>
+                <select id="debit-state" required><option value="">--</option></select>
+              </div>
+              <div class="field">
+                <label for="debit-zip">ZIP</label>
+                <input type="text" id="debit-zip" inputmode="numeric" placeholder="00000" maxlength="5" required>
+              </div>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn-primary">Review order</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 3B: Bank transfer form -->
+    <section id="view-bank" class="view" data-view="bank" hidden>
+      <div class="container flow-page">
+        <button type="button" class="btn-back" id="back-to-method-bank">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <div class="flow-top">
+          <h2 class="flow-title">Bank account details</h2>
+          <span class="step-indicator">Step 2 of 3</span>
+        </div>
+        <form id="form-bank" class="form" novalidate autocomplete="off">
+          <fieldset>
+            <legend class="sr-only">Account information</legend>
+            <div class="field">
+              <label for="bank-holder">Account holder name</label>
+              <input type="text" id="bank-holder" required>
+            </div>
+            <div class="field">
+              <label for="bank-name">Bank name</label>
+              <input type="text" id="bank-name" placeholder="e.g. Chase, Wells Fargo" required>
+            </div>
+            <div class="field-row-2">
+              <div class="field">
+                <label for="bank-routing">Routing number</label>
+                <input type="text" id="bank-routing" inputmode="numeric" placeholder="9 digits" maxlength="9" required>
+              </div>
+              <div class="field">
+                <label for="bank-account-type">Account type</label>
+                <select id="bank-account-type" required>
+                  <option value="">Select</option>
+                  <option value="checking">Checking</option>
+                  <option value="savings">Savings</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="bank-account">Account number</label>
+              <input type="text" id="bank-account" inputmode="numeric" required autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="bank-account-confirm">Confirm account number</label>
+              <input type="text" id="bank-account-confirm" inputmode="numeric" required autocomplete="off">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="fieldset-heading">Billing address</legend>
+            <div class="field">
+              <label for="bank-street">Street address</label>
+              <input type="text" id="bank-street" required>
+            </div>
+            <div class="field">
+              <label for="bank-apt">Apt / Suite <span class="opt">(optional)</span></label>
+              <input type="text" id="bank-apt">
+            </div>
+            <div class="field-row-3">
+              <div class="field">
+                <label for="bank-city">City</label>
+                <input type="text" id="bank-city" required>
+              </div>
+              <div class="field">
+                <label for="bank-state">State</label>
+                <select id="bank-state" required><option value="">--</option></select>
+              </div>
+              <div class="field">
+                <label for="bank-zip">ZIP</label>
+                <input type="text" id="bank-zip" inputmode="numeric" placeholder="00000" maxlength="5" required>
+              </div>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn-primary">Review order</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- STEP 4: Review -->
+    <section id="view-review" class="view" data-view="review" hidden>
+      <div class="container flow-page">
+        <button type="button" class="btn-back" id="back-to-details">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back
+        </button>
+        <div class="flow-top">
+          <h2 class="flow-title">Review your order</h2>
+          <span class="step-indicator">Step 3 of 3</span>
+        </div>
+        <div class="review-card">
+          <h3 class="review-label">Transaction</h3>
+          <dl class="review-rows">
+            <div class="review-row">
+              <dt>You send</dt>
+              <dd id="review-send">0.1 BTC</dd>
+            </div>
+            <div class="review-row">
+              <dt>Exchange rate</dt>
+              <dd id="review-rate">1 BTC = $67,432.00</dd>
+            </div>
+            <div class="review-row">
+              <dt>Fee</dt>
+              <dd id="review-fee" class="fee-zero">$0.00</dd>
+            </div>
+            <div class="review-row review-total">
+              <dt>You receive</dt>
+              <dd id="review-receive">$6,743.20 USD</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="review-card">
+          <h3 class="review-label">Payment</h3>
+          <dl class="review-rows">
+            <div class="review-row">
+              <dt>Method</dt>
+              <dd id="review-method">Debit card</dd>
+            </div>
+            <div class="review-row">
+              <dt>Details</dt>
+              <dd id="review-payment-detail">Card ending 4242</dd>
+            </div>
+            <div class="review-row">
+              <dt>Billing</dt>
+              <dd id="review-address">123 Main St, New York, NY 10001</dd>
+            </div>
+          </dl>
+        </div>
+        <p class="review-terms">By confirming, you agree to OffRamp's <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</p>
+        <button type="button" class="btn-primary" id="btn-confirm">Confirm and submit</button>
+      </div>
+    </section>
+
+    <!-- STEP 5: Confirmation -->
+    <section id="view-confirmation" class="view" data-view="confirmation" hidden>
+      <div class="container flow-page flow-centered">
+        <div class="confirm-check" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M9 16l5 5 9-12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 class="flow-title">Order submitted</h2>
+        <p class="flow-sub">Your withdrawal is being processed.</p>
+        <div class="review-card">
+          <dl class="review-rows">
+            <div class="review-row">
+              <dt>Reference</dt>
+              <dd id="confirm-ref">ORD-A7X3K9</dd>
+            </div>
+            <div class="review-row">
+              <dt>Amount</dt>
+              <dd id="confirm-amount">$6,743.20 USD</dd>
+            </div>
+            <div class="review-row">
+              <dt>Estimated arrival</dt>
+              <dd id="confirm-eta">Within minutes</dd>
+            </div>
+          </dl>
+        </div>
+        <button type="button" class="btn-primary" id="btn-new-order">New order</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">
+          <span class="logo-mark" aria-hidden="true"></span>offramp
+        </span>
+      </div>
+      <nav class="footer-nav" aria-label="Legal">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="#support">Support</a>
+      </nav>
+      <p class="footer-copy">&copy; 2024 OffRamp</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
