@@ -20,8 +20,12 @@
     <section id="view-exchange" class="view">
       <div class="wrap">
         <div class="hero">
-          <h1>Turn crypto into cash</h1>
-          <p class="lead">Sell Bitcoin, Ethereum, Solana and stablecoins for US dollars with zero fees. Withdraw straight to your debit card or bank account.</p>
+          <span class="fee-flag">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            0% fees &middot; always
+          </span>
+          <h1>Turn crypto into cash, <span class="free">100% fee&#8209;free</span></h1>
+          <p class="lead">Sell Bitcoin, Ethereum, Solana and stablecoins for US dollars with <strong>zero fees</strong>. You get the full live market rate &mdash; straight to your debit card or bank account.</p>
         </div>
 
         <div class="exchange-wrap">
@@ -48,15 +52,20 @@
 
             <div class="rate-line">
               <span>1 <span id="rate-sym">BTC</span> = <span class="rate-val" id="rate-val">--</span></span>
-              <span class="nofee">No fees</span>
+              <span class="nofee">$0 fees</span>
             </div>
 
             <div class="xfield">
-              <label class="xfield-label">You receive</label>
+              <label class="xfield-label">You receive <span class="lbl-note">full market rate</span></label>
               <div class="payout">
                 <span class="payout-cur">USD</span>
                 <span class="payout-val" id="payout-val">--</span>
               </div>
+            </div>
+
+            <div class="fee-callout">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9.5l3.5 3.5L15 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              No fees, ever. You keep 100% of your payout.
             </div>
 
             <button type="button" class="btn btn-brand btn-block" id="btn-continue" style="margin-top:16px">
@@ -67,10 +76,22 @@
           </div>
         </div>
 
+        <div class="fee-compare">
+          <div class="fc-item">
+            <span class="fc-num">0%</span>
+            <span class="fc-lbl">OffRamp fee</span>
+          </div>
+          <span class="fc-vs">vs</span>
+          <div class="fc-item muted">
+            <span class="fc-num">1&ndash;4%</span>
+            <span class="fc-lbl">Typical exchange</span>
+          </div>
+        </div>
+
         <div class="trust-row">
+          <span class="ti"><svg viewBox="0 0 20 20" fill="none"><path d="M3 10h14M3 6h14M3 14h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Zero conversion fees</span>
           <span class="ti"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2l6 2.5v4c0 3.8-2.5 6.8-6 8-3.5-1.2-6-4.2-6-8v-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.5 10l1.8 1.8L13 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Bank-grade encryption</span>
           <span class="ti"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.6"/><path d="M10 6v4l2.5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Instant to debit card</span>
-          <span class="ti"><svg viewBox="0 0 20 20" fill="none"><path d="M3 10h14M3 6h14M3 14h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Zero conversion fees</span>
         </div>
 
         <div class="assets-strip">
@@ -194,7 +215,7 @@
             <dl class="rev-rows">
               <div class="rev-row"><dt>You sell</dt><dd class="mono" id="rev-send">0.1 BTC</dd></div>
               <div class="rev-row"><dt>Locked rate</dt><dd class="mono" id="rev-rate">--</dd></div>
-              <div class="rev-row"><dt>Fee</dt><dd class="fee-free">$0.00</dd></div>
+              <div class="rev-row"><dt>OffRamp fee</dt><dd class="fee-free">$0.00 &mdash; free</dd></div>
               <div class="rev-row rev-total"><dt>You receive</dt><dd id="rev-receive">--</dd></div>
             </dl>
           </div>
