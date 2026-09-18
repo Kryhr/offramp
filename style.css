@@ -94,7 +94,10 @@ main { flex: 1; }
   border-bottom: 1px solid var(--border);
   padding-top: env(safe-area-inset-top, 0px);
 }
-.header-in { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 20px; }
+.header-in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; column-gap: 24px; }
+.header-in > .brand { justify-self: start; }
+.header-in > .main-nav { justify-self: center; }
+.header-in > .header-actions { justify-self: end; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); }
 .brand:hover { color: var(--text); }
 .brand-mark { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; }
@@ -140,7 +143,7 @@ main { flex: 1; }
 .coin-ic-lg { width: 32px; height: 32px; }
 
 /* ============ Home / exchange ============ */
-.hero { text-align: center; padding-block: 64px 36px; }
+.hero { text-align: center; padding-block: 60px 34px; }
 .hero h1 { font-size: clamp(34px, 5.5vw, 54px); margin-bottom: 18px; }
 .hero h1 .free { color: var(--brand-ink); }
 .hero p.lead {
@@ -166,8 +169,8 @@ main { flex: 1; }
 .fee-callout svg { width: 17px; height: 17px; flex-shrink: 0; }
 
 .fee-compare {
-  display: flex; align-items: center; justify-content: center; gap: 28px;
-  padding-block: 34px 6px;
+  display: flex; align-items: center; justify-content: center; gap: 32px;
+  padding-block: 40px 0;
 }
 .fc-item { display: flex; flex-direction: column; align-items: center; }
 .fc-num { font-family: var(--f-mono); font-weight: 700; font-size: clamp(30px, 6vw, 40px); letter-spacing: -0.03em; color: var(--brand-ink); line-height: 1; }
@@ -254,15 +257,15 @@ main { flex: 1; }
 .card-note { text-align: center; font-size: 12px; color: var(--text-3); margin-top: 14px; }
 
 .trust-row {
-  display: flex; align-items: center; justify-content: center; gap: 10px 22px; flex-wrap: wrap;
-  padding-block: 34px 8px; color: var(--text-2); font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 12px 28px; flex-wrap: wrap;
+  padding-block: 32px 0; color: var(--text-2); font-size: 14px; font-weight: 600;
 }
 .trust-row .ti { display: inline-flex; align-items: center; gap: 8px; }
 .trust-row .ti svg { color: var(--brand); width: 18px; height: 18px; }
 
 .assets-strip {
-  display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
-  padding-block: 26px 8px;
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding-block: 32px 8px;
 }
 .assets-strip .al { font-size: 12px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; }
 .asset-chip { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 13px; color: var(--text-2); }
@@ -496,6 +499,7 @@ main { flex: 1; }
 }
 @media (max-width: 720px) {
   .wrap { padding-inline: 18px; }
+  .header-in { display: flex; justify-content: space-between; }
   .main-nav, .header-actions .btn { display: none; }
   .nav-toggle { display: flex; }
   .site-header.open .main-nav {
