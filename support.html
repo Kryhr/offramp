@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support</title>
+  <meta name="description" content="Get help with OffRamp. Answers to common questions about cashing out crypto, payout times, limits, and account security.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F7A4D'/%3E%3Cpath d='M8 22.5 21 9.5' stroke='%23fff' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M14 9.5h7v7' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="support">
+  <header class="site-header"></header>
+  <main>
+    <div class="wrap">
+      <div class="page-hero">
+        <p class="eyebrow">Support</p>
+        <h1>How can we help?</h1>
+        <p>Answers to the questions we hear most. If you can't find what you need, reach out and a real person will get back to you.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Email us</h3>
+          <p>For account and payout questions.</p>
+          <a href="mailto:support@offramp.example">support@offramp.example</a>
+        </div>
+        <div class="contact-card">
+          <h3>Response time</h3>
+          <p>We reply to every message.</p>
+          <p style="color:var(--text);font-weight:700">Within 24 hours</p>
+        </div>
+        <div class="contact-card">
+          <h3>Order status</h3>
+          <p>Have your reference number ready.</p>
+          <p style="color:var(--text);font-weight:700">ORD-XXXXXX</p>
+        </div>
+      </div>
+
+      <h2 style="font-size:24px;margin:20px 0 8px">Frequently asked questions</h2>
+      <div class="faq" id="faq">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How long does a payout take?<svg class="fic" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="faq-a" hidden>Debit card payouts usually arrive within minutes of your crypto being received and reviewed. Bank (ACH) transfers take 1&ndash;3 business days depending on your bank.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What are the fees?<svg class="fic" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="faq-a" hidden>OffRamp charges zero conversion fees. You receive the live market rate shown at confirmation. The only cost is the network fee your blockchain charges to send the crypto to us, which is set by the network, not by OffRamp.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Which cryptocurrencies can I sell?<svg class="fic" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="faq-a" hidden>Currently Bitcoin (BTC), Ethereum (ETH), Solana (SOL), Tether (USDT) and USD Coin (USDC). We add more assets based on demand.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What information do I need to provide?<svg class="fic" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="faq-a" hidden>For a debit card payout: your card number, expiry, CVV and billing address. For a bank transfer: your bank name, routing number, account number and billing address. This information is used only to process your payout.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is my payout rate guaranteed?<svg class="fic" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="faq-a" hidden>Yes. The rate is locked the moment you confirm your order, so price movements between confirmation and payout don't affect the dollar amount you receive.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How is my data protected?<svg class="fic" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="faq-a" hidden>Your details are transmitted over an encrypted connection and used only to complete your payout. See our <a href="privacy.html">Privacy Policy</a> for how we collect, use and store your information.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer"></footer>
+  <script src="components.js"></script>
+  <script>
+    (function () {
+      document.querySelectorAll('.faq-q').forEach(function (q) {
+        q.addEventListener('click', function () {
+          var open = q.getAttribute('aria-expanded') === 'true';
+          q.setAttribute('aria-expanded', String(!open));
+          q.nextElementSibling.hidden = open;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
