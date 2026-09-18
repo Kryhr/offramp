@@ -69,7 +69,7 @@
             </div>
 
             <button type="button" class="btn btn-brand btn-block" id="btn-continue" style="margin-top:16px">
-              Continue
+              Sign up to continue
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <p class="card-note">Live rate from Binance. Locked at confirmation.</p>
@@ -105,11 +105,34 @@
       </div>
     </section>
 
+    <!-- STEP: Sign up (required before payment) -->
+    <section id="view-signup" class="view" hidden>
+      <div class="wrap">
+        <div class="flow">
+          <button type="button" class="flow-back" id="back-signup-exchange">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back
+          </button>
+          <div class="flow-head"><h2>Create your account</h2><span class="flow-step">Step 1 of 3</span></div>
+          <p class="flow-sub">Sign up to complete your cash&#8209;out of <strong id="signup-payout">$0.00</strong>. It takes less than a minute.</p>
+          <form id="form-signup" class="form" novalidate autocomplete="off">
+            <div class="fieldset">
+              <div class="field"><label for="su-name">Full name</label><input type="text" id="su-name" autocomplete="name" required></div>
+              <div class="field"><label for="su-email">Email address</label><input type="email" id="su-email" autocomplete="email" placeholder="you@email.com" required></div>
+              <div class="field"><label for="su-phone">Phone number</label><input type="tel" id="su-phone" autocomplete="tel" placeholder="(555) 123-4567" required></div>
+              <div class="field"><label for="su-pass">Create password</label><input type="password" id="su-pass" autocomplete="new-password" placeholder="At least 8 characters" required></div>
+            </div>
+            <button type="submit" class="btn btn-brand btn-block">Create account &amp; continue</button>
+            <p class="auth-note">Your details are used to process and track your payout. See our <a href="privacy.html">Privacy Policy</a>.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- STEP 2: Method -->
     <section id="view-method" class="view" hidden>
       <div class="wrap">
         <div class="flow">
-          <button type="button" class="flow-back" id="back-to-exchange">
+          <button type="button" class="flow-back" id="back-to-signup">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Back
           </button>
           <h2 class="flow-head" style="display:block">Choose how to get paid</h2>
@@ -222,6 +245,7 @@
           <div class="rev-card">
             <h3 class="rev-h">Payment</h3>
             <dl class="rev-rows">
+              <div class="rev-row"><dt>Account</dt><dd id="rev-account">--</dd></div>
               <div class="rev-row"><dt>Method</dt><dd id="rev-method">Debit card</dd></div>
               <div class="rev-row"><dt>Details</dt><dd id="rev-detail">--</dd></div>
               <div class="rev-row"><dt>Billing</dt><dd id="rev-address">--</dd></div>

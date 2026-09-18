@@ -4,7 +4,7 @@
   var MIN_PAYOUT = 10;
   var US_STATES = ['AL','AK','AZ','AR','CA','CO','CT','DE','DC','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
 
-  var state = { crypto: 'BTC', amount: '0.1', lockedRate: 0, method: null, card: {}, bank: {}, billing: {} };
+  var state = { crypto: 'BTC', amount: '0.1', lockedRate: 0, account: {}, method: null, card: {}, bank: {}, billing: {} };
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return (r || document).querySelectorAll(s); }
@@ -99,6 +99,20 @@
   }
   function req(id, msg) { var el = $(id); if (!el.value.trim()) { err(el, msg || 'Required'); return false; } return true; }
 
+  function validateSignup() {
+    var form = $('#form-signup'); clearErr(form); var ok = true;
+    if (!req('#su-name')) ok = false;
+    var email = $('#su-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err($('#su-email'), 'Enter a valid email'); ok = false; }
+    var phone = $('#su-phone').value.replace(/\D/g, '');
+    if (phone.length < 10) { err($('#su-phone'), 'Enter a valid phone number'); ok = false; }
+    if ($('#su-pass').value.length < 8) { err($('#su-pass'), 'At least 8 characters'); ok = false; }
+    if (ok) {
+      state.account = { name: $('#su-name').value.trim(), email: email, phone: $('#su-phone').value.trim() };
+    }
+    return ok;
+  }
+
   function validateDebit() {
     var form = $('#form-debit'); clearErr(form); var ok = true;
     if (!req('#card-name')) ok = false;
@@ -152,6 +166,7 @@
     $('#rev-rate').textContent = '1 ' + state.crypto + ' = ' + money(state.lockedRate);
     $('#rev-receive').textContent = money(total) + ' USD';
     $('#method-payout').textContent = money(total);
+    $('#rev-account').textContent = state.account.email || '--';
     if (state.method === 'debit') {
       $('#rev-method').textContent = 'Debit card';
       $('#rev-detail').textContent = 'Card ending ' + state.card.number.slice(-4);
@@ -205,8 +220,16 @@
       if (!p.rate) { alert('Fetching live rate, one moment...'); return; }
       if (p.total < MIN_PAYOUT) { alert('Minimum payout is ' + money(MIN_PAYOUT) + '. Increase your amount.'); return; }
       state.lockedRate = p.rate;
-      $('#method-payout').textContent = money(p.total);
-      show('view-method');
+      $('#signup-payout').textContent = money(p.total);
+      show('view-signup');
+    });
+
+    $('#form-signup').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (validateSignup()) {
+        $('#method-payout').textContent = money((parseFloat(state.amount) || 0) * state.lockedRate);
+        show('view-method');
+      }
     });
 
     $$('.method').forEach(function (m) {
@@ -216,7 +239,8 @@
       });
     });
 
-    $('#back-to-exchange').addEventListener('click', function () { show('view-exchange'); });
+    $('#back-signup-exchange').addEventListener('click', function () { show('view-exchange'); });
+    $('#back-to-signup').addEventListener('click', function () { show('view-signup'); });
     $('#back-method-debit').addEventListener('click', function () { show('view-method'); });
     $('#back-method-bank').addEventListener('click', function () { show('view-method'); });
     $('#back-to-details').addEventListener('click', function () { show(state.method === 'debit' ? 'view-debit' : 'view-bank'); });
@@ -236,8 +260,8 @@
 
     $('#btn-confirm').addEventListener('click', function () { renderConfirm(); show('view-confirm'); });
     $('#btn-new').addEventListener('click', function () {
-      state.method = null; state.card = {}; state.bank = {}; state.billing = {};
-      $('#form-debit').reset(); $('#form-bank').reset();
+      state.account = {}; state.method = null; state.card = {}; state.bank = {}; state.billing = {};
+      $('#form-signup').reset(); $('#form-debit').reset(); $('#form-bank').reset();
       show('view-exchange');
     });
   }

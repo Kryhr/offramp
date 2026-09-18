@@ -116,6 +116,69 @@
     '</div>' +
   '</div>';
 
+  var CHAT =
+  '<button class="chat-launcher" id="chat-launcher" aria-label="Open support chat" aria-expanded="false">' +
+    '<svg class="ic-open" width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.4 8.4 0 0 1-11.9 7.6L4 20.5l1.4-4.6A8.4 8.4 0 1 1 21 11.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 11.5h7M8.5 8.5h7M8.5 14.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+    '<svg class="ic-close" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+  '</button>' +
+  '<section class="chat-panel" id="chat-panel" role="dialog" aria-label="Support chat" hidden>' +
+    '<div class="chat-head">' +
+      '<span class="ch-avatar">' + markSvg('') + '</span>' +
+      '<div><div class="ch-title">OffRamp Support</div><div class="ch-status"><span class="dot"></span>Typically replies in a few minutes</div></div>' +
+      '<button class="chat-close" id="chat-close" aria-label="Close chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>' +
+    '</div>' +
+    '<div class="chat-body" id="chat-body">' +
+      '<div class="chat-msg bot">Hi there! 👋 Welcome to OffRamp. How can we help you cash out today?</div>' +
+    '</div>' +
+    '<form class="chat-foot" id="chat-form">' +
+      '<input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" aria-label="Message">' +
+      '<button class="chat-send" type="submit" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-3-6-7-2z" fill="currentColor"/></svg></button>' +
+    '</form>' +
+  '</section>';
+
+  function wireChat() {
+    var launcher = document.getElementById('chat-launcher');
+    var panel = document.getElementById('chat-panel');
+    var closeBtn = document.getElementById('chat-close');
+    var form = document.getElementById('chat-form');
+    var input = document.getElementById('chat-input');
+    var body = document.getElementById('chat-body');
+    if (!launcher || !panel) return;
+
+    function open() { panel.hidden = false; launcher.setAttribute('aria-expanded', 'true'); setTimeout(function () { input.focus(); }, 50); }
+    function close() { panel.hidden = true; launcher.setAttribute('aria-expanded', 'false'); }
+    function toggle() { if (panel.hidden) open(); else close(); }
+
+    function addMsg(text, who) {
+      var el = document.createElement('div');
+      el.className = 'chat-msg ' + who;
+      el.textContent = text;
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    launcher.addEventListener('click', toggle);
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
+
+    var replied = false;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var text = input.value.trim();
+      if (!text) return;
+      addMsg(text, 'user');
+      input.value = '';
+      setTimeout(function () {
+        if (!replied) {
+          addMsg('Thanks for reaching out! Our team will get back to you shortly. For anything urgent about a payout, email support@offramp.example with your order reference.', 'bot');
+          replied = true;
+        } else {
+          addMsg('Got it — we\'ve noted that and someone will follow up by email soon.', 'bot');
+        }
+      }, 700);
+    });
+  }
+
   function inject() {
     // sprite first so <use> references resolve
     var spriteHost = document.createElement('div');
@@ -126,6 +189,12 @@
     if (header) header.innerHTML = HEADER;
     var footer = document.querySelector('.site-footer');
     if (footer) footer.innerHTML = FOOTER;
+
+    // support chat (site-wide)
+    var chatHost = document.createElement('div');
+    chatHost.innerHTML = CHAT;
+    while (chatHost.firstChild) document.body.appendChild(chatHost.firstChild);
+    wireChat();
 
     // active nav
     var page = document.body.getAttribute('data-page');
